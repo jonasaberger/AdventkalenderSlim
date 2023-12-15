@@ -23,15 +23,15 @@
                         <Insets left="15.0" />
                      </HBox.margin>
                   </Label>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="btnMusic" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#toggleMusic" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../muisc-off.png" />
+                        <Image url="@../../../music-off.png" />
                      </image>
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../exit.png" />
                      </image>
