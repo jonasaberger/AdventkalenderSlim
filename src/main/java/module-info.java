@@ -1,6 +1,7 @@
 module org.example.adventkalenderslim {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
 
     opens org.example.adventkalenderslim to javafx.fxml;

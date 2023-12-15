@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
 import org.example.adventkalenderslim.Settings.Settings;
 
 import java.io.FileInputStream;
@@ -13,11 +16,8 @@ public class AdventkalenderController {
 
     private Settings settings = new Settings();
 
-
-
     @FXML
     private ImageView btnMusic = new ImageView();
-
 
 
 
@@ -40,7 +40,6 @@ public class AdventkalenderController {
             btnMusic.setImage(new Image(String.valueOf(this.getClass().getResource("/music-off.png"))));
         }
     }
-
 
 
     //Closes Program
