@@ -7,7 +7,7 @@ public class Settings {
 
     //Sets default settings
     public Settings(){
-        _music.setMuted(true);
+
     }
 
 

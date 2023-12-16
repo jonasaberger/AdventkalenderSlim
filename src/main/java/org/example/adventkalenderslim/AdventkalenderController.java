@@ -2,15 +2,9 @@ package org.example.adventkalenderslim;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import java.io.File;
 import org.example.adventkalenderslim.Settings.Settings;
-
-import java.io.FileInputStream;
 
 public class AdventkalenderController {
 
@@ -24,6 +18,7 @@ public class AdventkalenderController {
 
     public void initialize() {
 
+
     }
 
 
@@ -32,12 +27,14 @@ public class AdventkalenderController {
     protected void toggleMusic() {
         //Is Muted => Unmute
         if(settings.musicOption().getMuted() == true) {
-            settings.musicOption().setMuted(false);
-            btnMusic.setImage(new Image(String.valueOf(this.getClass().getResource("/music-on.png"))));
+            btnMusic.setImage(new Image(String.valueOf(this.getClass().getResource("/images/music-on.png"))));
+            System.out.println("Music Playing!");
+            settings.musicOption().unmute();
         }
         else {
-            settings.musicOption().setMuted(true);
-            btnMusic.setImage(new Image(String.valueOf(this.getClass().getResource("/music-off.png"))));
+            btnMusic.setImage(new Image(String.valueOf(this.getClass().getResource("/images/music-off.png"))));
+            System.out.println("Music Muted!");
+            settings.musicOption().mute();
         }
     }
 

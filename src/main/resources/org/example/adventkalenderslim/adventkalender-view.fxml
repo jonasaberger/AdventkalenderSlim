@@ -25,7 +25,7 @@
                   </Label>
                   <ImageView fx:id="btnMusic" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#toggleMusic" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../music-off.png" />
+                        <Image url="@../../../images/music-off.png" />
                      </image>
                      <HBox.margin>
                         <Insets right="15.0" />
@@ -33,7 +33,7 @@
                   </ImageView>
                   <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../exit.png" />
+                        <Image url="@../../../images/exit.png" />
                      </image>
                   </ImageView>
                </children>
