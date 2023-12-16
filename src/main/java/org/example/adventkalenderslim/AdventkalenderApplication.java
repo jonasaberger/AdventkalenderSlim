@@ -13,7 +13,7 @@ public class AdventkalenderApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AdventkalenderApplication.class.getResource("adventkalender-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 900, 600);
-        stage.setTitle("Adventkalender");
+        stage.setTitle("org.example.adventkalenderslim.Adventkalender");
         stage.setResizable(false);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
