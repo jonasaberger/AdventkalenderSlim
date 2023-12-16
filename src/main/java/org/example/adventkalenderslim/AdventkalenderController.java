@@ -5,12 +5,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import org.example.adventkalenderslim.Settings.CheatStar;
 import org.example.adventkalenderslim.Settings.Settings;
 
 import java.text.SimpleDateFormat;
@@ -24,14 +27,17 @@ public class AdventkalenderController {
     private Settings settings = new Settings();
     @FXML
     private ImageView btnMusic = new ImageView();
+    @FXML
+    private ImageView btnStar = new ImageView();
 
 
+
+    @FXML
+    private AnchorPane _main = new AnchorPane();
     @FXML
     private Pane _adventkalender = new Pane();
     private ArrayList<AdventkalenderDoor> _adventkalenderDoors = new ArrayList<>();
     private String _currentTime = new SimpleDateFormat("dd.MM").format(Calendar.getInstance().getTime());
-
-
 
 
     public void initialize() {
@@ -47,7 +53,7 @@ public class AdventkalenderController {
             }
             else {
                 System.out.println("24");
-                _adventkalenderDoors.add(new AdventkalenderDoor((Pane)door,(ImageView) ((((Pane) door).getChildren()).get(2))));
+                _adventkalenderDoors.add(new AdventkalenderDoor((Pane)door,(ImageView) ((((Pane) door).getChildren()).get(2)),(ImageView) ((((Pane) door).getChildren()).get(3))));
             }
         }
 
@@ -73,11 +79,35 @@ public class AdventkalenderController {
     protected void clickDoor(MouseEvent mouseEvent) {
         int doorId = Integer.valueOf(((Pane)(mouseEvent.getSource())).getId());
 
+        //Cheat-Star is active
+        if(settings.starOption().getStatus()) {
+            _adventkalenderDoors.get(doorId-1).setReady();
+        }
+        else { //Do the normal checking-routine
 
-
+        }
     }
 
 
+    //CHEATING-STAR -> activate the cheat-mode
+    @FXML
+    protected void toggleStar() {
+        //Is Shining => Fade
+        if(settings.starOption().getStatus()) {
+            settings.starOption().fade();
+            btnStar.setOpacity(0);
+            _main.setCursor(new ImageCursor());
+        }
+        else { //Is Faded => Shine
+            settings.starOption().shine();
+            btnStar.setOpacity(1);
+            _main.setCursor(new ImageCursor(new Image(String.valueOf(this.getClass().getResource("/images/cheating-star.png"))),24,24));
+            for(AdventkalenderDoor door : _adventkalenderDoors) {
+                door.getFog().setCursor(new ImageCursor(new Image(String.valueOf(this.getClass().getResource("/images/cheating-star.png"))),24,24));
+                door.getFogDoor().setCursor(new ImageCursor(new Image(String.valueOf(this.getClass().getResource("/images/cheating-star.png"))),24,24));
+            }
+        }
+    }
 
 
     //MUSIC-SETTINGS -> have to be in Controller for changing icons

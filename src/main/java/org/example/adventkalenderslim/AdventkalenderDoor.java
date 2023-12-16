@@ -7,21 +7,39 @@ public class AdventkalenderDoor {
 
     private Pane _door = new Pane();
     private ImageView _fog = new ImageView();
+    private ImageView _fogDoor = new ImageView();
     private boolean _isReady;
 
 
 
+    //For 1-23
     public AdventkalenderDoor(Pane door, ImageView fog) {
         this._door = door;
         this._fog = fog;
+    }
+
+    //For 24
+    public AdventkalenderDoor(Pane door, ImageView fog, ImageView fogDoor) {
+        this._door = door;
+        this._fog = fog;
+        this._fogDoor = fogDoor;
     }
 
     public Pane getDoor() {
         return _door;
     }
 
+    public ImageView getFogDoor() {
+        return _fogDoor;
+    }
+
+    public ImageView getFog() {
+        return _fog;
+    }
+
     public void setReady() {
         _isReady = true;
         _fog.setVisible(false);
+        _fogDoor.setVisible(false);
     }
 }

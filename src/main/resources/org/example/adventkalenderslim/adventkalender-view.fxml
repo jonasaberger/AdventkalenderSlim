@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.adventkalenderslim.AdventkalenderController">
+<AnchorPane fx:id="_main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.adventkalenderslim.AdventkalenderController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true">
          <image>
@@ -47,15 +47,12 @@
             </HBox>
             <Pane fx:id="_adventkalender" prefHeight="505.0" prefWidth="900.0">
                <children>
-                  <Pane cache="true" depthTest="DISABLE" layoutX="24.0" layoutY="67.0" onMouseClicked="#clickDoor" prefHeight="54.0" prefWidth="54.0" style="-fx-border-color: white; -fx-border-width: 20; -fx-border-radius: 1;">
+                  <Pane accessibleText="1" cache="true" depthTest="DISABLE" layoutX="24.0" layoutY="67.0" onMouseClicked="#clickDoor" prefHeight="54.0" prefWidth="54.0" style="-fx-border-color: white; -fx-border-width: 20; -fx-border-radius: 1;">
                      <children>
                         <ImageView disable="true" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../images/doors/1.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -79,9 +76,6 @@
                            <image>
                               <Image url="@../../../images/doors/2.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -102,9 +96,6 @@
                            <image>
                               <Image url="@../../../images/doors/3.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -125,9 +116,6 @@
                            <image>
                               <Image url="@../../../images/doors/4.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -148,9 +136,6 @@
                            <image>
                               <Image url="@../../../images/doors/5.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -171,9 +156,6 @@
                            <image>
                               <Image url="@../../../images/doors/6.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -194,9 +176,6 @@
                            <image>
                               <Image url="@../../../images/doors/7.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -217,9 +196,6 @@
                            <image>
                               <Image url="@../../../images/doors/8.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -240,9 +216,6 @@
                            <image>
                               <Image url="@../../../images/doors/9.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -263,9 +236,6 @@
                            <image>
                               <Image url="@../../../images/doors/10.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -286,9 +256,6 @@
                            <image>
                               <Image url="@../../../images/doors/11.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -309,9 +276,6 @@
                            <image>
                               <Image url="@../../../images/doors/12.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -332,9 +296,6 @@
                            <image>
                               <Image url="@../../../images/doors/13.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -355,9 +316,6 @@
                            <image>
                               <Image url="@../../../images/doors/14.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -378,9 +336,6 @@
                            <image>
                               <Image url="@../../../images/doors/15.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -401,9 +356,6 @@
                            <image>
                               <Image url="@../../../images/doors/16.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -424,9 +376,6 @@
                            <image>
                               <Image url="@../../../images/doors/17.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -447,9 +396,6 @@
                            <image>
                               <Image url="@../../../images/doors/18.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -470,9 +416,6 @@
                            <image>
                               <Image url="@../../../images/doors/19.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -493,9 +436,6 @@
                            <image>
                               <Image url="@../../../images/doors/20.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -516,9 +456,6 @@
                            <image>
                               <Image url="@../../../images/doors/21.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -539,9 +476,6 @@
                            <image>
                               <Image url="@../../../images/doors/22.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -562,9 +496,6 @@
                            <image>
                               <Image url="@../../../images/doors/23.png" />
                            </image>
-                           <cursor>
-                              <Cursor fx:constant="OPEN_HAND" />
-                           </cursor>
                         </ImageView>
                         <ImageView blendMode="SRC_ATOP" fitHeight="50.0" fitWidth="50.0" layoutX="2.0" layoutY="2.0" opacity="0.7" pickOnBounds="true">
                            <image>
@@ -588,21 +519,35 @@
                               <Font name="HomeChristmas-Regular" size="36.0" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="196.0" fitWidth="226.0" layoutX="-63.0" layoutY="-6.0" opacity="0.65" pickOnBounds="true">
+                        <ImageView fitHeight="145.0" fitWidth="116.0" layoutX="7.0" layoutY="16.0" opacity="0.65" pickOnBounds="true">
                            <image>
                               <Image url="@../../../images/doors/door-fog-2.PNG" />
                            </image>
+                           <cursor>
+                              <Cursor fx:constant="NONE" />
+                           </cursor>
                         </ImageView>
                         <ImageView fitHeight="164.0" fitWidth="133.0" pickOnBounds="true">
                            <image>
                               <Image url="@../../../images/doors/24-2.png" />
                            </image>
+                           <cursor>
+                              <Cursor fx:constant="OPEN_HAND" />
+                           </cursor>
                         </ImageView>
                      </children>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
                   </Pane>
                </children>
             </Pane>
          </children>
       </VBox>
+      <ImageView fx:id="btnStar" fitHeight="14.0" fitWidth="13.0" layoutX="23.0" layoutY="54.0" onMouseClicked="#toggleStar" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/cheating-star.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
