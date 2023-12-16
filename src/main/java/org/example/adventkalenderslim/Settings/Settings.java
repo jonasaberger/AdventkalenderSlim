@@ -4,6 +4,7 @@ package org.example.adventkalenderslim.Settings;
 public class Settings {
 
     private Music _music = new Music();
+    //TODO Add Cheating-Tool for doors
 
     //Sets default settings
     public Settings(){

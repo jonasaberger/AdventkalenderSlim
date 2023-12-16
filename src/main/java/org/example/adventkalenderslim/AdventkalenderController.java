@@ -13,7 +13,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import org.example.adventkalenderslim.Settings.Settings;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class AdventkalenderController {
@@ -27,17 +29,12 @@ public class AdventkalenderController {
     @FXML
     private Pane _adventkalender = new Pane();
     private ArrayList<AdventkalenderDoor> _adventkalenderDoors = new ArrayList<>();
-
-
-
+    private String _currentTime = new SimpleDateFormat("dd.MM").format(Calendar.getInstance().getTime());
 
 
 
 
     public void initialize() {
-
-        ImageView doorItems;
-        System.out.println(_adventkalender.getChildren().getFirst());
 
         //Initialize the adventkalender
         for (Node door : _adventkalender.getChildren()) {
@@ -53,6 +50,21 @@ public class AdventkalenderController {
                 _adventkalenderDoors.add(new AdventkalenderDoor((Pane)door,(ImageView) ((((Pane) door).getChildren()).get(2))));
             }
         }
+
+        //"Unfog" the available doors
+        //Check if its even December
+        if(((_currentTime.split("\\."))[1]).equals("12")) {
+            //Unfog all the current doors
+            for(int i = 1; i <= Integer.valueOf(_currentTime.split("\\.")[0]); i++) {
+                _adventkalenderDoors.get(i-1).setReady();
+            }
+        }
+        else {
+            //TODO Make its not December-Exception Alert
+        }
+
+
+        //TODO Open the already opened doors -> DB
     }
 
 
@@ -61,15 +73,9 @@ public class AdventkalenderController {
     protected void clickDoor(MouseEvent mouseEvent) {
         int doorId = Integer.valueOf(((Pane)(mouseEvent.getSource())).getId());
 
-        _adventkalenderDoors.get(doorId);
-
-
 
 
     }
-
-
-
 
 
 
