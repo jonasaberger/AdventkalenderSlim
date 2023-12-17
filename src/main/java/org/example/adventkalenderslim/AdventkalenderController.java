@@ -16,6 +16,10 @@ import javafx.scene.layout.Pane;
 import org.example.adventkalenderslim.Settings.CheatStar;
 import org.example.adventkalenderslim.Settings.Settings;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,6 +41,7 @@ public class AdventkalenderController {
     @FXML
     private Pane _adventkalender = new Pane();
     private ArrayList<AdventkalenderDoor> _adventkalenderDoors = new ArrayList<>();
+    private String _currentDoor = "1";
     private String _currentTime = new SimpleDateFormat("dd.MM").format(Calendar.getInstance().getTime());
 
 
@@ -69,10 +74,31 @@ public class AdventkalenderController {
             //TODO Make its not December-Exception Alert
         }
 
-
-        //TODO Open the already opened doors -> DB
+        //Check if the db is present
+        File f = new File("./src/main/resources/data/db.txt");
+        if(f.exists() && !f.isDirectory()) {
+            //DB present
+            _currentDoor = readData();
+            //Anti-Manipulation Check
+            if(Integer.valueOf(_currentDoor) > 24 || Integer.valueOf(_currentDoor) > Integer.valueOf(_currentTime.split("\\.")[0])) {
+                //TODO Throw "Christkind-Betrüger" Exception
+                System.out.println("Betrüger");
+                resetData();
+                exit();
+            }
+            else {
+                for(int i = 0; i < Integer.valueOf(_currentDoor)-1; i++) {
+                    _adventkalenderDoors.get(i).removeDoor();
+                }
+            }
+        }
+        else
+        {
+            //TODO Throw db not located Exception
+            resetData();
+            exit();
+        } //Database not present -> creating default one
     }
-
 
 
     @FXML
@@ -85,6 +111,63 @@ public class AdventkalenderController {
         }
         else { //Do the normal checking-routine
 
+            //Check if all doors are opened
+            if(doorId == Integer.valueOf(_currentDoor)) {
+                _adventkalenderDoors.get(doorId-1).openDoor();
+                _currentDoor = String.valueOf((Integer.valueOf(_currentDoor)+1));
+                writeData();
+            }
+            else {
+                //TODO Forgot Door Alert
+                System.out.println("Du hast ein Türchen vergessen...");
+            }
+
+        }
+    }
+
+    //Writes next to open door in DB
+    @FXML
+    protected void writeData() {
+        try {
+            FileWriter fileWriter = new FileWriter("./src/main/resources/data/db.txt",false);
+            fileWriter.write(_currentDoor);
+            fileWriter.close();
+        }
+        catch(IOException ioException) {
+            System.out.println("An IO-Exception was thrown! [writeData]");
+        }
+    }
+
+    //Reads DB for the next door
+    @FXML
+    protected String readData() {
+        try {
+            FileReader fileReader = new FileReader("./src/main/resources/data/db.txt");
+            int nextChar;
+            String fString = "";
+
+            while((nextChar = fileReader.read()) != -1) {
+                fString += ((char)nextChar);
+            }
+            return fString;
+        }
+        catch(IOException ioException) {
+            System.out.println("An IO-Exception was thrown! [readData]");
+        }
+        return "ERROR";
+    }
+
+    //Initializes / Resets DB-Data
+    @FXML
+    protected void resetData() {
+        System.out.println("RESETTINGG...");
+        try {
+            FileWriter fileWriter = new FileWriter("./src/main/resources/data/db.txt",false);
+            fileWriter.write("1");
+            fileWriter.close();
+        }
+        catch(IOException ioException) {
+            System.out.println("An IO-Exception was thrown! [resetData]");
         }
     }
 

@@ -12,7 +12,6 @@ public class Settings {
 
     }
 
-
     public Music musicOption(){return _music;} //Allows access to music options
 
     public CheatStar starOption(){return _star;} //Allows access to cheating(star) options

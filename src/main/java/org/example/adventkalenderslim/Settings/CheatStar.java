@@ -7,22 +7,15 @@ public class CheatStar {
     public CheatStar() {
         _status = false;
     }
-
-
     public boolean getStatus() {
         return _status;
     }
-
     public void shine() {
         _status = true;
-        System.out.println("The Cheating-Star is shining...");
+        System.out.println("The Cheating-Stars light is shining bright...");
     }
-
     public void fade() {
         _status = false;
-        System.out.println("The Cheating-Star is fading...");
-
+        System.out.println("The light of the Cheating-Star is fading...");
     }
-
-
 }

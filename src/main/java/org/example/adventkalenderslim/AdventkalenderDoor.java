@@ -33,6 +33,16 @@ public class AdventkalenderDoor {
         return _fogDoor;
     }
 
+    //Opens the Door with the whole alert thingy -> first open
+    public void openDoor() {
+        _door.setVisible(false);
+    }
+
+    //Just removes the Door silently
+    public void removeDoor() {
+        _door.setVisible(false);
+    }
+
     public ImageView getFog() {
         return _fog;
     }
