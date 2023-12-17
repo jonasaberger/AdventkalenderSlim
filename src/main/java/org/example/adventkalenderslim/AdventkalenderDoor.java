@@ -11,7 +11,6 @@ public class AdventkalenderDoor {
     private boolean _isReady;
 
 
-
     //For 1-23
     public AdventkalenderDoor(Pane door, ImageView fog) {
         this._door = door;
@@ -51,5 +50,9 @@ public class AdventkalenderDoor {
         _isReady = true;
         _fog.setVisible(false);
         _fogDoor.setVisible(false);
+    }
+
+    public boolean getReady() {
+        return _isReady;
     }
 }

@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -109,20 +110,24 @@ public class AdventkalenderController {
         if(settings.starOption().getStatus()) {
             _adventkalenderDoors.get(doorId-1).setReady();
         }
-        else { //Do the normal checking-routine
-
+        //Do the normal checking-routine
             //Check if all doors are opened
-            if(doorId == Integer.valueOf(_currentDoor)) {
+            if(doorId == Integer.valueOf(_currentDoor) || settings.starOption().getStatus()) {
                 _adventkalenderDoors.get(doorId-1).openDoor();
                 _currentDoor = String.valueOf((Integer.valueOf(_currentDoor)+1));
                 writeData();
             }
             else {
-                //TODO Forgot Door Alert
-                System.out.println("Du hast ein Türchen vergessen...");
+                //TODO Protected by Power of "Christkind" Alert
+                if(!_adventkalenderDoors.get(doorId-1).getReady()) {
+                    System.out.println("Dieses Türchen wird durch die Kraft des Christkinds blockiert!");
+                }
+                else {
+                    //TODO Forgot Door Alert
+                    System.out.println("Du hast ein Türchen vergessen...");
+                }
             }
 
-        }
     }
 
     //Writes next to open door in DB
@@ -180,9 +185,16 @@ public class AdventkalenderController {
             settings.starOption().fade();
             btnStar.setOpacity(0);
             _main.setCursor(new ImageCursor());
+            for(AdventkalenderDoor door : _adventkalenderDoors) {
+                door.getFog().setCursor(Cursor.NONE);
+                door.getFogDoor().setCursor(Cursor.OPEN_HAND);
+            }
+
         }
         else { //Is Faded => Shine
             settings.starOption().shine();
+            _currentDoor = "666"; //If Program is restarted -> called out as cheater
+            writeData();
             btnStar.setOpacity(1);
             _main.setCursor(new ImageCursor(new Image(String.valueOf(this.getClass().getResource("/images/cheating-star.png"))),24,24));
             for(AdventkalenderDoor door : _adventkalenderDoors) {
