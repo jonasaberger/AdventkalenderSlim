@@ -1,13 +1,45 @@
 package org.example.adventkalenderslim;
 
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.io.IOException;
+import java.util.Optional;
 
 public class AdventkalenderDoor {
-
-    private Pane _door = new Pane();
-    private ImageView _fog = new ImageView();
+    //Door Itself
+    @FXML
+    private Pane _door;
+    @FXML
+    private ImageView _fog;
+    @FXML
     private ImageView _fogDoor = new ImageView();
+
+    //Door Content & Body -> information from Controller
+    @FXML
+    private Label lbDoorTitle;
+    @FXML
+    private ImageView ivDoorImage;
+    @FXML
+    private Label lbDoorText;
+
+    private Stage _stage;
+    private Scene _scene;
+
+
+    private AdventskalenderDoorinformation _information = new AdventskalenderDoorinformation();
     private boolean _isReady;
 
 
@@ -24,19 +56,39 @@ public class AdventkalenderDoor {
         this._fogDoor = fogDoor;
     }
 
-    public Pane getDoor() {
-        return _door;
-    }
-
     public ImageView getFogDoor() {
         return _fogDoor;
     }
 
-    //Opens the Door with the whole alert thingy -> first open
-    public void openDoor() {
-        _door.setVisible(false);
+
+    //PHYSICAL FUNCTIONS
+
+    public void setTitle(String title) {
+        lbDoorTitle.setText(title);
+    }
+    public void setText(String text) {
+        lbDoorText.setText(text);
+    }
+    public void setImage(Image image) {
+        ivDoorImage.setImage(image);
     }
 
+    public void setStage(Stage stage) {
+        this._stage = stage;
+    }
+
+    public void setScene(Scene scene) {
+        this._scene = scene;
+    }
+
+
+    @FXML
+    public void closeDoor() {
+        _stage.close();
+    }
+
+
+    //SOFT-BACKEND FUNCTIONS
     //Just removes the Door silently
     public void removeDoor() {
         _door.setVisible(false);

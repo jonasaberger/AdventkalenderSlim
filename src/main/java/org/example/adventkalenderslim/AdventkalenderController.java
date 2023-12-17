@@ -1,19 +1,25 @@
 package org.example.adventkalenderslim;
 
+import javafx.animation.Interpolator;
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
-import javafx.scene.ImageCursor;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.example.adventkalenderslim.Settings.CheatStar;
 import org.example.adventkalenderslim.Settings.Settings;
 
@@ -39,6 +45,8 @@ public class AdventkalenderController {
 
     @FXML
     private AnchorPane _main = new AnchorPane();
+
+
     @FXML
     private Pane _adventkalender = new Pane();
     private ArrayList<AdventkalenderDoor> _adventkalenderDoors = new ArrayList<>();
@@ -79,9 +87,9 @@ public class AdventkalenderController {
         File f = new File("./src/main/resources/data/db.txt");
         if(f.exists() && !f.isDirectory()) {
             //DB present
-            _currentDoor = readData();
+            _currentDoor = readDoorNumber();
             //Anti-Manipulation Check
-            if(Integer.valueOf(_currentDoor) > 24 || Integer.valueOf(_currentDoor) > Integer.valueOf(_currentTime.split("\\.")[0])) {
+            if(Integer.valueOf(_currentDoor) > 24 || Integer.valueOf(_currentDoor) > (Integer.valueOf(_currentTime.split("\\.")[0])+1)) {
                 //TODO Throw "Christkind-Betrüger" Exception
                 System.out.println("Betrüger");
                 resetData();
@@ -105,17 +113,42 @@ public class AdventkalenderController {
     @FXML
     protected void clickDoor(MouseEvent mouseEvent) {
         int doorId = Integer.valueOf(((Pane)(mouseEvent.getSource())).getId());
+        AdventkalenderDoor clickedDoor = _adventkalenderDoors.get(doorId-1);
 
         //Cheat-Star is active
         if(settings.starOption().getStatus()) {
-            _adventkalenderDoors.get(doorId-1).setReady();
+            clickedDoor.setReady();
         }
         //Do the normal checking-routine
             //Check if all doors are opened
             if(doorId == Integer.valueOf(_currentDoor) || settings.starOption().getStatus()) {
-                _adventkalenderDoors.get(doorId-1).openDoor();
+
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("adventkalender-popup.fxml"));
+                    Stage stage = new Stage();
+                    clickedDoor.setStage(stage);
+
+                    fxmlLoader.setController(clickedDoor);
+                    Scene scene = new Scene(fxmlLoader.load(),500,400);
+                    clickedDoor.setScene(scene);
+                    stage.setScene(scene);
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    stage.show();
+                }
+                catch(IOException e) {
+                    System.out.println("CANT LOAD");
+                    e.printStackTrace();
+                }
+
+                //Get Information for specific Door from file -> Text + Image
+                clickedDoor.setTitle("Türchen " + doorId);
+                clickedDoor.setText(readDoorContent(doorId));
+                try {clickedDoor.setImage(new Image(String.valueOf(this.getClass().getResource(("/images/door-content/" + doorId + ".jpg")))));}
+                catch(Exception e) {System.out.println("Door-Image not found!");}
+
+                clickedDoor.removeDoor();
                 _currentDoor = String.valueOf((Integer.valueOf(_currentDoor)+1));
-                writeData();
+                writeDoorNumber(); //Update DoorNumber
             }
             else {
                 //TODO Protected by Power of "Christkind" Alert
@@ -130,9 +163,32 @@ public class AdventkalenderController {
 
     }
 
+
+    @FXML
+    protected String readDoorContent(int index) {
+        try {
+            FileReader fileReader = new FileReader("./src/main/resources/data/content.txt");
+            int nextChar;
+            String fString = ""; //Full-String
+            String pString []; //Part-String -> String with all the index parts
+            while((nextChar = fileReader.read()) != -1) {
+                fString += ((char)nextChar);
+            }
+            pString = fString.split("-*\\n");
+            return pString[index-1];
+        }
+        catch(IOException ioException) {
+            System.out.println("An IO-Exception was thrown! [readData]");
+        }
+        return "ERROR";
+
+    }
+
+
+
     //Writes next to open door in DB
     @FXML
-    protected void writeData() {
+    protected void writeDoorNumber() {
         try {
             FileWriter fileWriter = new FileWriter("./src/main/resources/data/db.txt",false);
             fileWriter.write(_currentDoor);
@@ -145,7 +201,7 @@ public class AdventkalenderController {
 
     //Reads DB for the next door
     @FXML
-    protected String readData() {
+    protected String readDoorNumber() {
         try {
             FileReader fileReader = new FileReader("./src/main/resources/data/db.txt");
             int nextChar;
@@ -194,7 +250,7 @@ public class AdventkalenderController {
         else { //Is Faded => Shine
             settings.starOption().shine();
             _currentDoor = "666"; //If Program is restarted -> called out as cheater
-            writeData();
+            writeDoorNumber();
             btnStar.setOpacity(1);
             _main.setCursor(new ImageCursor(new Image(String.valueOf(this.getClass().getResource("/images/cheating-star.png"))),24,24));
             for(AdventkalenderDoor door : _adventkalenderDoors) {
