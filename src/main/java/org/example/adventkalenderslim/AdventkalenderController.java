@@ -1,11 +1,6 @@
 package org.example.adventkalenderslim;
 
-import javafx.animation.Interpolator;
-import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
@@ -13,14 +8,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
-import org.example.adventkalenderslim.Settings.CheatStar;
 import org.example.adventkalenderslim.Settings.Settings;
 
 import java.io.File;
@@ -30,7 +20,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class AdventkalenderController {
 
@@ -92,6 +81,7 @@ public class AdventkalenderController {
             if(Integer.valueOf(_currentDoor) > 24 || Integer.valueOf(_currentDoor) > (Integer.valueOf(_currentTime.split("\\.")[0])+1)) {
                 //TODO Throw "Christkind-Betrüger" Exception
                 System.out.println("Betrüger");
+
                 resetData();
                 exit();
             }
@@ -129,7 +119,7 @@ public class AdventkalenderController {
                     clickedDoor.setStage(stage);
 
                     fxmlLoader.setController(clickedDoor);
-                    Scene scene = new Scene(fxmlLoader.load(),500,400);
+                    Scene scene = new Scene(fxmlLoader.load(),500,333);
                     clickedDoor.setScene(scene);
                     stage.setScene(scene);
                     stage.initStyle(StageStyle.UNDECORATED);
@@ -141,7 +131,7 @@ public class AdventkalenderController {
                 }
 
                 //Get Information for specific Door from file -> Text + Image
-                clickedDoor.setTitle("Türchen " + doorId);
+                clickedDoor.setTitle("Tuerchen " + doorId);
                 clickedDoor.setText(readDoorContent(doorId));
                 try {clickedDoor.setImage(new Image(String.valueOf(this.getClass().getResource(("/images/door-content/" + doorId + ".jpg")))));}
                 catch(Exception e) {System.out.println("Door-Image not found!");}
@@ -166,22 +156,28 @@ public class AdventkalenderController {
 
     @FXML
     protected String readDoorContent(int index) {
-        try {
-            FileReader fileReader = new FileReader("./src/main/resources/data/content.txt");
-            int nextChar;
-            String fString = ""; //Full-String
-            String pString []; //Part-String -> String with all the index parts
-            while((nextChar = fileReader.read()) != -1) {
-                fString += ((char)nextChar);
-            }
-            pString = fString.split("-*\\n");
-            return pString[index-1];
-        }
-        catch(IOException ioException) {
-            System.out.println("An IO-Exception was thrown! [readData]");
-        }
-        return "ERROR";
 
+        File content = new File("./src/main/resources/data/content.txt");
+        if(content.exists() && !content.isDirectory()) {
+            try {
+                FileReader fileReader = new FileReader(content);
+                int nextChar;
+                String fString = ""; //Full-String
+                String pString []; //Part-String -> String with all the index parts
+
+                while((nextChar = fileReader.read()) != -1) {
+                    fString += ((char)nextChar);
+                }
+                pString = fString.split("-*\\n");
+                fileReader.close();
+                return pString[index-1];
+            }
+            catch(IOException ioException) {
+                System.out.println("An IO-Exception was thrown! [readData]");
+            }
+        }
+        System.out.println("Couldn't locate door-content file [readDoorContent]");
+        return "There was an ERROR trying to load the Door-Content...";
     }
 
 
