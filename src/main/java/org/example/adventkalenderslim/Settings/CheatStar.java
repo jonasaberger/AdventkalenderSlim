@@ -1,6 +1,6 @@
 package org.example.adventkalenderslim.Settings;
 
-//TODO Maybe add Alert for the cheating star
+//TODO Maybe add AdventAlert for the cheating star
 public class CheatStar {
 
     private boolean _status;

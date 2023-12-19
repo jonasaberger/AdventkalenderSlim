@@ -27,6 +27,8 @@ public class AdventkalenderDoor {
     @FXML
     private ImageView _fogDoor = new ImageView();
 
+    private Stage _stage;
+
     //Door Content & Body -> information from Controller
     @FXML
     private Label lbDoorTitle;
@@ -34,12 +36,6 @@ public class AdventkalenderDoor {
     private ImageView ivDoorImage;
     @FXML
     private Label lbDoorText;
-
-    private Stage _stage;
-    private Scene _scene;
-
-
-    private AdventskalenderDoorinformation _information = new AdventskalenderDoorinformation();
     private boolean _isReady;
 
 
@@ -59,10 +55,7 @@ public class AdventkalenderDoor {
     public ImageView getFogDoor() {
         return _fogDoor;
     }
-
-
     //PHYSICAL FUNCTIONS
-
     public void setTitle(String title) {
         lbDoorTitle.setText(title);
     }
@@ -72,20 +65,18 @@ public class AdventkalenderDoor {
     public void setImage(Image image) {
         ivDoorImage.setImage(image);
     }
-
-    public void setStage(Stage stage) {
-        this._stage = stage;
-    }
-
-    public void setScene(Scene scene) {
-        this._scene = scene;
-    }
-
+    public void setStage(Stage stage){this._stage = stage;}
 
     @FXML
-    public void closeDoor() {
+    public void open(){
+        _stage.show();}
+
+    //Never accessed cause Class gets set as Controller dynamically
+    @FXML
+    public void close() {
         _stage.close();
     }
+
 
 
     //SOFT-BACKEND FUNCTIONS
@@ -93,17 +84,14 @@ public class AdventkalenderDoor {
     public void removeDoor() {
         _door.setVisible(false);
     }
-
     public ImageView getFog() {
         return _fog;
     }
-
     public void setReady() {
         _isReady = true;
         _fog.setVisible(false);
         _fogDoor.setVisible(false);
     }
-
     public boolean getReady() {
         return _isReady;
     }

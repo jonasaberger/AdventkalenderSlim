@@ -22,8 +22,6 @@ public class AdventkalenderApplication extends Application {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
-
-
     }
 
 
