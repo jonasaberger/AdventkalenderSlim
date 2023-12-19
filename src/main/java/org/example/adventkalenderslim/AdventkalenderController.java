@@ -1,19 +1,22 @@
 package org.example.adventkalenderslim;
 
+import javafx.animation.Animation;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.example.adventkalenderslim.Alert.AdventkalenderAlert;
-import org.example.adventkalenderslim.Alert.AlertType;
+import org.example.adventkalenderslim.Settings.AlertType;
 import org.example.adventkalenderslim.Settings.Settings;
 
 import java.io.File;
@@ -32,7 +35,10 @@ public class AdventkalenderController {
     private ImageView btnMusic = new ImageView();
     @FXML
     private ImageView btnStar = new ImageView();
-
+    @FXML
+    private ImageView btnSnow = new ImageView();
+    @FXML
+    private ImageView ivBackground = new ImageView();
 
 
     @FXML
@@ -43,10 +49,12 @@ public class AdventkalenderController {
     private Pane _adventkalender = new Pane();
     private ArrayList<AdventkalenderDoor> _adventkalenderDoors = new ArrayList<>();
     private String _currentDoor = "1";
-    private String _currentTime = new SimpleDateFormat("dd.MM").format(Calendar.getInstance().getTime());
-
+    //private String _currentTime = new SimpleDateFormat("dd.MM").format(Calendar.getInstance().getTime());
+    private String currentDay = (new SimpleDateFormat("dd.MM").format(Calendar.getInstance().getTime()).split("\\.")[0]);
+    private String currentMonth = (new SimpleDateFormat("dd.MM").format(Calendar.getInstance().getTime()).split("\\.")[1]);
 
     public void initialize() {
+
 
         //Initialize the adventkalender
         for (Node door : _adventkalender.getChildren()) {
@@ -62,16 +70,24 @@ public class AdventkalenderController {
             }
         }
 
+
+
         //"Unfog" the available doors
         //Check if its even December
-        if(((_currentTime.split("\\."))[1]).equals("12")) {
+        if(currentMonth.equals("12")) {
             //Unfog all the current doors
-            for(int i = 1; i <= Integer.valueOf(_currentTime.split("\\.")[0]); i++) {
+            for(int i = 1; i <= Integer.valueOf(currentDay); i++) {
                 _adventkalenderDoors.get(i-1).setReady();
             }
+
         }
         else {
-            //TODO Make its not December-Exception AdventAlert
+            //Make its not December-Exception AdventAlert
+            //Unfog all the current doors
+            for(int i = 1; i <= Integer.valueOf(currentDay); i++) {
+                _adventkalenderDoors.get(i-1).setNotReady();
+            }
+            createAlert(AlertType.Dezember);
         }
 
         //Check if the db is present
@@ -79,15 +95,18 @@ public class AdventkalenderController {
         if(f.exists() && !f.isDirectory()) {
             //DB present
             _currentDoor = readDoorNumber();
-            //Anti-Manipulation Check
-            if(Integer.valueOf(_currentDoor) > 24 || Integer.valueOf(_currentDoor) > (Integer.valueOf(_currentTime.split("\\.")[0])+1)) {
-                //TODO Throw "Christkind-Betrüger" Exception
-                System.out.println("Betrüger");
 
+            //Check for Snow
+            if(Integer.valueOf(_currentDoor) < 5){btnSnow.setVisible(false);}
+
+            //Anti-Manipulation Check
+            if(Integer.valueOf(_currentDoor) > 24 || Integer.valueOf(_currentDoor) > (Integer.valueOf(currentDay)+1)) {
+                //"Christkind-Betrüger" Exception
+                createAlert(AlertType.Betrueger);
                 resetData();
-                exit();
             }
             else {
+
                 for(int i = 0; i < Integer.valueOf(_currentDoor)-1; i++) {
                     _adventkalenderDoors.get(i).removeDoor();
                 }
@@ -95,9 +114,9 @@ public class AdventkalenderController {
         }
         else
         {
-            //TODO Throw db not located Exception
+            //Throw db not located Exception
+            createAlert(AlertType.DataBase);
             resetData();
-            exit();
         } //Database not present -> creating default one
     }
 
@@ -105,20 +124,22 @@ public class AdventkalenderController {
     @FXML
     protected void clickDoor(MouseEvent mouseEvent) {
         int doorId = Integer.valueOf(((Pane)(mouseEvent.getSource())).getId());
-        String currentday = _currentTime.split("\\.")[0];
         AdventkalenderDoor clickedDoor = _adventkalenderDoors.get(doorId-1);
 
-        //Cheat-Star is active
-        if(settings.starOption().getStatus()) {
-            clickedDoor.setReady();
+        //Update Snowfall
+        if(Integer.valueOf(_currentDoor) >= 5) {
+            btnSnow.setVisible(true);
         }
+        else {
+            btnSnow.setVisible(false);
+        }
+
         //Do the normal checking-routine
             //Check if all doors are opened
-            if(clickedDoor.getReady()) {
+            if(doorId == Integer.valueOf(_currentDoor) || doorId == Integer.parseInt(_currentDoor) || settings.starOption().getStatus()) {
 
-
-                createDoor(clickedDoor); //Create and Set Controller to the clicked-door
-
+                //Create and Set Controller to the clicked-door
+                createDoor(clickedDoor);
 
                 //Get Information for specific Door from file -> Text + Image
                 clickedDoor.setTitle("Tuerchen " + doorId);
@@ -133,17 +154,13 @@ public class AdventkalenderController {
                 writeDoorNumber(); //Update DoorNumber
             }
             else {
-                //TODO Protected by Power of "Christkind" AdventAlert
+                //Protected by Power of "Christkind" AdventAlert
                 if(!_adventkalenderDoors.get(doorId-1).getReady()) {
-                    System.out.println("Dieses Türchen wird durch die Kraft des Christkinds blockiert!");
+                    createAlert(AlertType.Christkind);
                 }
                 else {
-                    //TODO Forgot Door AdventAlert
-                    System.out.println("Du hast ein Türchen vergessen...");
-                    AdventkalenderAlert tuerchenAlert = new AdventkalenderAlert();
-                    createAlert(tuerchenAlert);
-                    tuerchenAlert.open();
-
+                    //Forgot Door AdventAlert
+                    createAlert(AlertType.Tuerchen);
                 }
             }
 
@@ -164,7 +181,7 @@ public class AdventkalenderController {
                 while((nextChar = fileReader.read()) != -1) {
                     fString += ((char)nextChar);
                 }
-                pString = fString.split("-*\\n");
+                pString = fString.split(".*\\n");
                 fileReader.close();
                 return pString[index-1];
             }
@@ -181,7 +198,6 @@ public class AdventkalenderController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("adventkalender-popup.fxml"));
             Stage stage = new Stage();
-
             fxmlLoader.setController(clickedDoor);
             Scene scene = new Scene(fxmlLoader.load(),500,333);
             stage.setScene(scene);
@@ -194,19 +210,23 @@ public class AdventkalenderController {
         }
     }
 
-    protected void createAlert(AdventkalenderAlert adventAlert) {
+    protected void createAlert(AlertType alertType) {
         try {
+            AdventkalenderAlert adventkalenderAlert = new AdventkalenderAlert(_currentDoor, alertType);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("adventkalender-alert.fxml"));
             Stage stage = new Stage();
 
-            fxmlLoader.setController(adventAlert);
-            Scene scene = new Scene(fxmlLoader.load(),500,333);
+            fxmlLoader.setController(adventkalenderAlert);
+            Scene scene = new Scene(fxmlLoader.load(),300,200);
             stage.setScene(scene);
             stage.initStyle(StageStyle.UNDECORATED);
-            adventAlert.setStage(stage);
+            adventkalenderAlert.setStage(stage);
+            stage.setAlwaysOnTop(true);
+            adventkalenderAlert.configure();
+            stage.show();
         }
         catch(IOException e) {
-            System.out.println("CANT LOAD TÜRCHEN");
+            System.out.println("CANT LOAD ALERT");
             e.printStackTrace();
         }
     }
@@ -256,7 +276,6 @@ public class AdventkalenderController {
             System.out.println("An IO-Exception was thrown! [resetData]");
         }
     }
-
     //CHEATING-STAR -> activate the cheat-mode
     @FXML
     protected void toggleStar() {
@@ -283,7 +302,16 @@ public class AdventkalenderController {
             }
         }
     }
+    @FXML
+    protected void toggleSnow() {
 
+        if(ivBackground.getImage().getUrl().equals(String.valueOf(this.getClass().getResource("/images/snowing-gif.gif")))) {
+            ivBackground.setImage(new Image(String.valueOf(this.getClass().getResource("/images/background.jpg"))));
+        }
+        else {
+            ivBackground.setImage(new Image(String.valueOf(this.getClass().getResource("/images/snowing-gif.gif"))));
+        }
+    }
 
     //MUSIC-SETTINGS -> have to be in Controller for changing icons
     @FXML
@@ -300,7 +328,6 @@ public class AdventkalenderController {
             settings.musicOption().mute();
         }
     }
-
 
     //Closes Program
     public void exit() {

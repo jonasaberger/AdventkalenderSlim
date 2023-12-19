@@ -29,7 +29,7 @@ public class AdventkalenderDoor {
 
     private Stage _stage;
 
-    //Door Content & Body -> information from Controller
+    //Door Content & Body -> Information from Controller
     @FXML
     private Label lbDoorTitle;
     @FXML
@@ -71,7 +71,6 @@ public class AdventkalenderDoor {
     public void open(){
         _stage.show();}
 
-    //Never accessed cause Class gets set as Controller dynamically
     @FXML
     public void close() {
         _stage.close();
@@ -91,6 +90,11 @@ public class AdventkalenderDoor {
         _isReady = true;
         _fog.setVisible(false);
         _fogDoor.setVisible(false);
+    }
+    public void setNotReady() {
+        _isReady = false;
+        _fog.setVisible(true);
+        _fogDoor.setVisible(true);
     }
     public boolean getReady() {
         return _isReady;

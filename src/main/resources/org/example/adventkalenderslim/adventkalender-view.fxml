@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane  fx:id="_main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.adventkalenderslim.AdventkalenderController">
+<AnchorPane fx:id="_main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.adventkalenderslim.AdventkalenderController">
    <children>
-      <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true">
+      <ImageView fx:id="ivBackground" fitHeight="600.0" fitWidth="900.0" pickOnBounds="true">
          <image>
             <Image url="@../../../images/background.jpg" />
          </image>
@@ -22,7 +22,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="900.0">
                <children>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="71.0" prefWidth="759.0" text="Adventkalender" textFill="WHITE">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="684.0" text="Adventkalender" textFill="WHITE">
                      <font>
                         <Font name="HomeChristmas-Regular" size="55.0" />
                      </font>
@@ -30,6 +30,14 @@
                         <Insets left="15.0" />
                      </HBox.margin>
                   </Label>
+                  <ImageView fx:id="btnSnow" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#toggleSnow" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../../../images/snow.png" />
+                     </image>
+                  </ImageView>
                   <ImageView fx:id="btnMusic" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#toggleMusic" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../images/music-off.png" />
