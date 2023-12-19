@@ -1,5 +1,9 @@
 # AdventkalenderSlim by Jonas Aberger
 
+!For Collab.!
+-Verlinkung des jeweiligen CodeSnippets mit "-by AdventskalenderSlim [Jonas Aberger]"
+
+
 Image Sources
 - https://visitnuneatonandbedworth.co.uk/advent-calendar/ -> for advent-calender doors
 - https://icons8.com/ -> for icons
