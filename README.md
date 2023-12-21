@@ -1,10 +1,7 @@
 # AdventkalenderSlim by Jonas Aberger
 
-!For Collab.!
--Verlinkung des jeweiligen CodeSnippets mit "-by AdventskalenderSlim [Jonas Aberger]"
-
 
 Image Sources
-- https://visitnuneatonandbedworth.co.uk/advent-calendar/ -> for advent-calender doors
-- https://icons8.com/ -> for icons
+- DOOR-IMAGES: https://visitnuneatonandbedworth.co.uk/about-nuneaton/
+- ICONS: https://icons8.com/
 - http://merrychristmas2014quotes.blogspot.com/2014/12/merry-christmas-2014-full-hd-wallpapers.html -> christmas wallpaper
